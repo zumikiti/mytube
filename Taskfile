@@ -1,0 +1,63 @@
+#!/bin/bash
+# https://github.com/adriancooney/Taskfile#install
+
+function up {
+  docker-compose up -d
+}
+
+function down {
+  docker-compose down
+}
+
+function restart {
+  docker-compose restart
+}
+
+function exec {
+  docker-compose exec app "$@"
+}
+
+function bash {
+  exec bash
+}
+
+function php {
+  exec /usr/bin/php "$@"
+}
+
+function artisan {
+  exec /usr/bin/php artisan "$@"
+}
+
+function composer {
+  exec /usr/local/bin/composer "$@"
+}
+
+function test {
+  exec vendor/bin/phpunit "$@"
+}
+
+function tinker {
+  artisan tinker
+}
+
+function dev {
+  exec npm run dev
+}
+
+function start {
+  echo "start task not implemented"
+}
+
+function default {
+  help
+}
+
+function help {
+    echo "$0 <task> <args>"
+    echo "Tasks:"
+    compgen -A function | cat -n
+}
+
+TIMEFORMAT="Task completed in %3lR"
+time ${@:-default}
