@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import LaravelLogo from '@/views/components/laravel-logo.vue'
 import InertiaLogo from '@/views/components/inertia-logo.vue'
+import FileUpload from '@/views/components/file-upload.vue'
 import ResourceBlock from '@/views/components/resource-block.vue'
 
 defineProps<{
   videos: {
     name: string
-  }
+  },
+  token: string,
 }>()
 </script>
 
@@ -16,6 +18,12 @@ defineProps<{
       <div class="flex justify-center items-center pt-8 space-x-12 sm:pt-0">
         <LaravelLogo class="h-20 w-auto text-[#EF3B2D]" />
         <InertiaLogo class="h-11 w-auto text-[#826ded]" />
+      </div>
+
+      <div class="flex justify-center items-center pt-8 space-x-12 sm:pt-0">
+        <FileUpload
+          :token="token"
+        />
       </div>
 
       <div class="mt-8 bg-white dark:bg-zinc-800 overflow-hidden shadow sm:rounded-lg">

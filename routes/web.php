@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return inertia('welcome');
-});
+Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
+
+Route::post('/videos', [VideoController::class, 'store']);
