@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreVideoRequest;
 use App\Http\Requests\UpdateVideoRequest;
 use App\Models\Video;
+use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
 {
@@ -16,16 +17,38 @@ class VideoController extends Controller
      */
     public function store(StoreVideoRequest $request)
     {
+        $input = $request->only([
+            'name',
+        ]);
+
         $file = $request->file('file');
         $originalName = $file->getClientOriginalName();
 
-        $video = Video::create(['original_name' => $originalName]);
+        $input['original_name'] = $originalName;
 
-        $filename = "{$video->id}_{$originalName}" ;
-        $file->storeAs('', $filename);
-        $video->update(['name' => $filename]);
+        if (Video::where('name', $input['name'])->doesntExist()) {
+            Video::create($input);
+            $file->storeAs('videos', $input['name']);
 
-        return response();
+            // ファイルサイズ
+            $size = Storage::disk('local')->size('videos/' . $input['name']);
+
+            return json_encode(['size' => $size]);
+        }
+
+        // ファイルの結合
+        $filePath = Storage::disk('local')
+            ->path('videos/' . $input['name']);
+        file_put_contents(
+            $filePath,
+            file_get_contents($file),
+            FILE_APPEND,
+        );
+
+        // ファイルサイズ
+        $size = Storage::disk('local')->size('videos/' . $input['name']);
+
+        return json_encode(['size' => $size]);
     }
 
     /**

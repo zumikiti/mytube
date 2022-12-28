@@ -24,8 +24,8 @@ class StoreVideoRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-            'file' => 'required_without:name|file',
+            // 'name' => 'required|max:255',
+            // 'file' => 'required_without:name|file',
         ];
     }
 }

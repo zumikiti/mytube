@@ -16,5 +16,3 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
-
-Route::post('/videos', [VideoController::class, 'store']);
