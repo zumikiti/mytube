@@ -47,7 +47,8 @@ const uploadFile = async () => {
   ++i.value
 }
 
-const sliceSize = 0.5 * 1024 * 1024 // 切り取るサイズ 2M
+const sliceMB = import.meta.env.VITE_FILE_SLICE_SIZE_MB
+const sliceSize = sliceMB * 1024 * 1024 // 切り取るサイズ
 const submit = async () => {
   // 連打防止
   if (intervalId.value) return
