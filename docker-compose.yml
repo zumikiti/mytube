@@ -2,6 +2,7 @@ version: '3'
 
 services:
   app:
+    platform: linux/amd64 # M1チップ対応のため追記
     image: thecodingmachine/php:8.1-v4-apache-node16
     ports:
       - '${APP_PORT:-8080}:80'
